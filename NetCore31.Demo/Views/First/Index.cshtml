@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model System.String;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<h2>ViewBag传值： @base.ViewBag.User1</h2>
+<h2>ViewData传值： @base.ViewData["User2"]</h2>
+<h2>TempData传值 @base.TempData["User3"]</h2>
+<h2>Session传值: @base.Context.Session.GetString("User4")</h2>
+<h2>Model传值： @Model</h2>
+
