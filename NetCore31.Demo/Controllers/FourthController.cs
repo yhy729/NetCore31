@@ -16,6 +16,9 @@ using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
 using Microsoft.AspNetCore.Authorization;
+using NetCore31.EFCore.Model;
+using NetCore31.EFCore.Model.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetCore31.Demo.Controllers
 {
@@ -30,6 +33,7 @@ namespace NetCore31.Demo.Controllers
         private readonly IServiceE _serviceE;
         private readonly IServiceProvider _serviceProvider;
         private readonly IConfiguration _configuration;
+        private readonly DbContext _dbContext;
 
         public FourthController(ILogger<FourthController> logger,
             ILoggerFactory loggerFactory,
@@ -39,7 +43,8 @@ namespace NetCore31.Demo.Controllers
             IServiceD serviceD,
             IServiceE serviceE,
             IServiceProvider serviceProvider,
-            IConfiguration configuration
+            IConfiguration configuration,
+            DbContext dbContext
             )
         {
             _logger = logger;
@@ -51,12 +56,30 @@ namespace NetCore31.Demo.Controllers
             _serviceE = serviceE;
             _serviceProvider = serviceProvider;
             _configuration = configuration;
+            _dbContext = dbContext;
         }
 
         //[TypeFilter(typeof(CustomActionCheckFilterAttribute))]
-        [Authorize]
+        //[Authorize]
         public IActionResult Index()
         {
+            //using (MyDbContext context = new MyDbContext())
+            //{
+            //    var user = context.Set<SysUser>().FirstOrDefault();
+            //    base.ViewBag.UserName = user.Name;
+            //}
+
+            //var user = this._dbContext.Set<SysUser>().FirstOrDefault();
+            //base.ViewBag.UserName = user.Name;
+
+            //对象式构造函数注入和方法内获取的生命周期是不一样的
+            using (MyDbContext context = new MyDbContext())
+            {
+                var userList1 = context.Set<SysUser>().OrderBy(x => x.LastLoginTime).Skip(1).Take(5);
+                base.ViewBag.UserList1 = userList1;
+            }
+            var userList2 = this._dbContext.Set<SysUser>().OrderBy(x => x.LastLoginTime).Skip(1).Take(5);
+            base.ViewBag.UserList2 = userList2;
             return View();
         }
 
@@ -74,25 +97,26 @@ namespace NetCore31.Demo.Controllers
             string verifyCode = base.HttpContext.Session.GetString("CheckCode");
             if (verifyCode != null && verifyCode.Equals(verify, StringComparison.CurrentCultureIgnoreCase))
             {
-                if ("Yhy".Equals(name) && "123456".Equals(password))
+                if ("admin".Equals(name) && "admin666".Equals(password))
                 {
                     CurrentUser currentUser = new CurrentUser()
                     {
                         Id = 123,
                         Name = "admin",
-                        Account = "admin666",
+                        Account = "admin",
                         Email = "888888888",
-                        Password = "123456",
+                        Password = "admin666",
                         LoginTime = DateTime.Now
                     };
 
-                    #region Cookie/Session 自己写
+                    #region 之前的方式Cookie/Session 自己写
                     //base.HttpContext.SetCookies("CurrentUser", Newtonsoft.Json.JsonConvert.SerializeObject(currentUser), 30);
                     //base.HttpContext.Session.SetString("CurrentUser", Newtonsoft.Json.JsonConvert.SerializeObject(currentUser));
                     #endregion
                     //过期时间全局设置
 
-                    #region MyRegion
+                    #region Net Core中推荐的方式
+                    //用户信息，字典式
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.Name,name),

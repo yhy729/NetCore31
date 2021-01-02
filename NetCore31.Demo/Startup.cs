@@ -25,6 +25,8 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.Extensions.FileProviders.Physical;
 using Microsoft.Extensions.FileProviders.Internal;
 using NetCore31.Demo.Utility.MiddleWare;
+using NetCore31.EFCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetCore31.Demo
 {
@@ -57,9 +59,26 @@ namespace NetCore31.Demo
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
                     {
+                        //如果没有登录跳转的地址
                         options.LoginPath = new PathString("/Fourth/Login");
+                        //如果没有权限跳转的地址
                         options.AccessDeniedPath = new PathString("/Home/Privacy");
                     });//用cookie的方式验证，顺便初始化登录地址
+
+            services.AddScoped<DbContext, MyDbContext>();
+
+            //services.AddDbContext<MyDbContext>(options =>
+            //        {
+            //            //读取配置文件中的链接字符串
+            //            options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection"));
+            //        });
+
+            //services.AddEntityFrameworkSqlServer()
+            //        .AddDbContext<MyDbContext>(options =>
+            //        {
+            //            //读取配置文件中的链接字符串
+            //            options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection"));
+            //        });
 
             //不是直接new 而是容器生成 就可已自动注入
             services.AddScoped(typeof(CustomExceptionFilterAttribute));
@@ -175,6 +194,26 @@ namespace NetCore31.Demo
             //    });
             //});
 
+            ////注意 response has been started
+            ////因为response-content length-不允许写,可以使用OnStarting等方式实现部分需求
+            //app.Use(next =>
+            //{
+            //    Console.WriteLine("This is middleware2.5");
+            //    return new RequestDelegate(async context =>
+            //    {
+            //        //await context.Response.WriteAsync("Hello World 2.5 Start!");
+            //        context.Response.OnStarting(state =>
+            //        {
+            //            var httpContext = (HttpContext)state;
+            //            httpContext.Response.Headers.Add("middleware", "123456");
+            //            return Task.CompletedTask;
+            //        }, context);
+            //        await next.Invoke(context);
+            //        //await context.Response.WriteAsync("Hello World 2.5 End!");
+            //        await Task.Run(() => Console.WriteLine("01234567890"));
+            //    });
+            //});
+
             //app.Use(next =>
             //{
             //    Console.WriteLine("This is middleware3");
@@ -258,6 +297,8 @@ namespace NetCore31.Demo
             loggerFactory.AddLog4Net();
 
             app.UseSession();
+
+            //app.UseHttpsRedirection();
 
             //配置静态文件
             app.UseStaticFiles(new StaticFileOptions

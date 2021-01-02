@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +19,9 @@ namespace NetCore31.Demo.Controllers
     /// Asp.NetCore-AOP-Filter
     /// 面向切面编程--做一些面向对象做不到的事情
     /// </summary>
-    [CustomControllerFilter]
+    //[CustomControllerFilter]
     //[ServiceFilter(typeof(CustomExceptionFilterAttribute))]//控制器生效 需要ConfigureServices注入services.AddScoped(typeof(CustomExceptionFilterAttribute));
+    [Authorize]
     public class ThirdController : Controller
     {
         private readonly ILogger<ThirdController> _logger;
