@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NetCore31.EFCore.Model.Models;
+using NetCore31.EFCore.Model.SqlLog;
 using System;
 using System.IO;
 
@@ -53,12 +54,13 @@ namespace NetCore31.EFCore.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
-            var configuration = builder.Build();
-            var conn = configuration.GetConnectionString("MyDbConnection");
-            optionsBuilder.UseSqlServer(conn);
+            //var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            //var configuration = builder.Build();
+            //var conn = configuration.GetConnectionString("MyDbConnection");
+            //optionsBuilder.UseSqlServer(conn);
 
             //optionsBuilder.UseSqlServer(this._IConfiguration.GetConnectionString("MyDbConnection"));
+            //optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());
             //optionsBuilder.UseLoggerFactory(this._iLoggerFactory);
         }
 

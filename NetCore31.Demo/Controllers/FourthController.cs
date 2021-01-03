@@ -75,13 +75,13 @@ namespace NetCore31.Demo.Controllers
             //base.ViewBag.UserName = user.Name;
 
             //对象式构造函数注入和方法内获取的生命周期是不一样的
-            using (MyDbContext context = new MyDbContext())
-            {
-                var userList1 = context.Set<SysUser>().OrderBy(x => x.LastLoginTime).Skip(1).Take(5);
-                base.ViewBag.UserList1 = userList1;
-            }
-            var userList2 = this._dbContext.Set<SysUser>().OrderBy(x => x.LastLoginTime).Skip(1).Take(5);
-            base.ViewBag.UserList2 = userList2;
+            //using (MyDbContext context = new MyDbContext())
+            //{
+            //    var userList1 = context.Set<SysUser>().OrderBy(x => x.LastLoginTime).Skip(1).Take(5);
+            //    base.ViewBag.UserList1 = userList1;
+            //}
+            //var userList2 = this._dbContext.Set<SysUser>().OrderBy(x => x.LastLoginTime).Skip(1).Take(5);
+            //base.ViewBag.UserList2 = userList2;
             return View();
         }
 

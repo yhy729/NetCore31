@@ -69,14 +69,14 @@ namespace NetCore31.Demo
             //直接注入(在MyDbContext中自己控制数据库连接)
             services.AddScoped<DbContext, MyDbContext>();
 
-            //注入的同时传入options(注入的时候才指定数据库连接)
+            //注入的同时传入options(注入的时候才指定数据库连接,这种方式配置在注入的地方需要注入的是MyDbContext而不能是DbContext)
             //services.AddDbContext<MyDbContext>(options =>
             //        {
             //            //读取配置文件中的链接字符串
             //            options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection"));
             //        });
 
-            //注入的同时传入options(注入的时候才指定数据库连接)
+            //注入的同时传入options(注入的时候才指定数据库连接,这种方式配置在注入的地方需要注入的是MyDbContext而不能是DbContext)
             //services.AddEntityFrameworkSqlServer()
             //        .AddDbContext<MyDbContext>(options =>
             //        {
