@@ -33,7 +33,8 @@ namespace NetCore31.Demo.Controllers
         private readonly IServiceE _serviceE;
         private readonly IServiceProvider _serviceProvider;
         private readonly IConfiguration _configuration;
-        private readonly DbContext _dbContext;
+        //private readonly DbContext _dbContext;
+        private readonly IUserService _userService;
 
         public FourthController(ILogger<FourthController> logger,
             ILoggerFactory loggerFactory,
@@ -44,7 +45,8 @@ namespace NetCore31.Demo.Controllers
             IServiceE serviceE,
             IServiceProvider serviceProvider,
             IConfiguration configuration,
-            DbContext dbContext
+             IUserService userService
+            //DbContext dbContext
             )
         {
             _logger = logger;
@@ -56,7 +58,8 @@ namespace NetCore31.Demo.Controllers
             _serviceE = serviceE;
             _serviceProvider = serviceProvider;
             _configuration = configuration;
-            _dbContext = dbContext;
+            //_dbContext = dbContext;
+            _userService = userService;
         }
 
         //[TypeFilter(typeof(CustomActionCheckFilterAttribute))]
@@ -82,6 +85,11 @@ namespace NetCore31.Demo.Controllers
             //}
             //var userList2 = this._dbContext.Set<SysUser>().OrderBy(x => x.LastLoginTime).Skip(1).Take(5);
             //base.ViewBag.UserList2 = userList2;
+
+
+            var userList2 = this._userService.Find<SysUser>(Guid.Parse("32304177-1128-4CB1-BB88-F0BF7FE14F8F"));
+            base.ViewBag.UserName = userList2.Name;
+
             return View();
         }
 

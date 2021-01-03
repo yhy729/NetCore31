@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetCore31.EFCore.Model\NetCore31.EFCore.Model.csproj" />
     <ProjectReference Include="..\NetCore31.Interface\NetCore31.Interface.csproj" />
   </ItemGroup>
 

@@ -54,10 +54,10 @@ namespace NetCore31.EFCore.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
-            //var configuration = builder.Build();
-            //var conn = configuration.GetConnectionString("MyDbConnection");
-            //optionsBuilder.UseSqlServer(conn);
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            var configuration = builder.Build();
+            var conn = configuration.GetConnectionString("MyDbConnection");
+            optionsBuilder.UseSqlServer(conn);
 
             //optionsBuilder.UseSqlServer(this._IConfiguration.GetConnectionString("MyDbConnection"));
             //optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());

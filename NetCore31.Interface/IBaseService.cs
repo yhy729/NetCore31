@@ -15,7 +15,7 @@ namespace NetCore31.Interface
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        T Find<T>(int id) where T : class;
+        T Find<T>(Guid id) where T : class;
 
         /// <summary>
         /// 提供对单表的查询
@@ -81,7 +81,7 @@ namespace NetCore31.Interface
         /// 根据主键删除数据，即时Commit
         /// </summary>
         /// <param name="t"></param>
-        void Delete<T>(int Id) where T : class;
+        void Delete<T>(Guid Id) where T : class;
 
         /// <su+mary>
         /// 删除数据，即时Commit

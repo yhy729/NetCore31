@@ -99,6 +99,8 @@ namespace NetCore31.Demo
             //services.AddTransient<IServiceD, ServiceD>();
             //services.AddTransient<IServiceE, ServiceE>();
 
+            services.AddScoped<IUserService, UserService>();
+
 
             services.Configure<EmailOption>(op => op.Title = "Default Name");
             services.Configure<EmailOption>("FromMemory", op => op.Title = "FromMemory");

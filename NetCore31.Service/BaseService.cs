@@ -25,7 +25,7 @@ namespace NetCore31.Service
         #endregion Identity
 
         #region Query
-        public T Find<T>(int id) where T : class
+        public T Find<T>(Guid id) where T : class
         {
             return this.Context.Set<T>().Find(id);
         }
@@ -152,7 +152,7 @@ namespace NetCore31.Service
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="Id"></param>
-        public void Delete<T>(int Id) where T : class
+        public void Delete<T>(Guid Id) where T : class
         {
             T t = this.Find<T>(Id);//也可以附加
             if (t == null) throw new Exception("t is null");
