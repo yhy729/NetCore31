@@ -5,11 +5,21 @@
 
 <h1>Index</h1>
 <h2>@base.ViewBag.UserName</h2>
-@foreach (var user in base.ViewBag.UserList1)
-{
-    <h2>@user.Name</h2>
-}@foreach (var user in base.ViewBag.UserList2)
-{
-    <h2>@user.Name</h2>
-}
+<br />
 
+@if (base.ViewBag.UserList1 != null)
+{
+    @foreach (var user in base.ViewBag.UserList1)
+    {
+        <h2>@user.Name</h2>
+    }
+}
+<br />
+
+@if (base.ViewBag.UserList1 != null)
+{
+    @foreach (var user in base.ViewBag.UserList2)
+    {
+        <h2>@user.Name</h2>
+    }
+}

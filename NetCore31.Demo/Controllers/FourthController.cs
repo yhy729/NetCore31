@@ -63,12 +63,14 @@ namespace NetCore31.Demo.Controllers
         //[Authorize]
         public IActionResult Index()
         {
+            ////直接使用MyDbContext的方式
             //using (MyDbContext context = new MyDbContext())
             //{
             //    var user = context.Set<SysUser>().FirstOrDefault();
             //    base.ViewBag.UserName = user.Name;
             //}
 
+            ////使用构造函数注入的Dbcontex 需要在ConfigureServices先注入
             //var user = this._dbContext.Set<SysUser>().FirstOrDefault();
             //base.ViewBag.UserName = user.Name;
 

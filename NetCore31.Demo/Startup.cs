@@ -65,20 +65,25 @@ namespace NetCore31.Demo
                         options.AccessDeniedPath = new PathString("/Home/Privacy");
                     });//用cookie的方式验证，顺便初始化登录地址
 
+            #region 注入DbContext
+            //直接注入(在MyDbContext中自己控制数据库连接)
             services.AddScoped<DbContext, MyDbContext>();
 
+            //注入的同时传入options(注入的时候才指定数据库连接)
             //services.AddDbContext<MyDbContext>(options =>
             //        {
             //            //读取配置文件中的链接字符串
             //            options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection"));
             //        });
 
+            //注入的同时传入options(注入的时候才指定数据库连接)
             //services.AddEntityFrameworkSqlServer()
             //        .AddDbContext<MyDbContext>(options =>
             //        {
             //            //读取配置文件中的链接字符串
             //            options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection"));
-            //        });
+            //        }); 
+            #endregion
 
             //不是直接new 而是容器生成 就可已自动注入
             services.AddScoped(typeof(CustomExceptionFilterAttribute));
