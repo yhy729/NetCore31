@@ -27,6 +27,7 @@ using Microsoft.Extensions.FileProviders.Internal;
 using NetCore31.Demo.Utility.MiddleWare;
 using NetCore31.EFCore.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NetCore31.Demo
 {
@@ -55,6 +56,10 @@ namespace NetCore31.Demo
                          options.Filters.Add<CustomExceptionFilterAttribute>();//全局注册
                          options.Filters.Add<CustomGlobalFilterAttribute>();
                      });//.AddRazorRuntimeCompilation();//修改cshtml后能自动编译;
+
+            //框架提供的将Controller注册为容器托管的服务
+            //services.AddMvc().AddControllersAsServices();
+            //services.AddMvcCore().AddControllersAsServices();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
@@ -122,6 +127,14 @@ namespace NetCore31.Demo
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterModule<CustomAutofacModule>();
+
+            #region Controller托管到Autofac中并支持属性注入
+            //var controllerBaseType = typeof(ControllerBase);
+            ////扫描Controller类
+            //containerBuilder.RegisterAssemblyTypes(typeof(Program).Assembly)
+            //                .Where(x => controllerBaseType.IsAssignableFrom(x) && x != controllerBaseType)
+            //                .PropertiesAutowired(); //属性注入 
+            #endregion
         }
 
         /// <summary>

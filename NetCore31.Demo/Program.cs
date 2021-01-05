@@ -51,7 +51,7 @@ namespace NetCore31.Demo
                 //     //需要配置文件
                 //     loggingBuilder.AddLog4Net();
                 // })
-                //配置Autofac容器 设置工厂来替换容器
+                //配置Autofac容器 设置工厂来替换容器(只需要在这里设置ServiceProviderFactory为AutofacServiceProviderFactory即可)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>//开始IWebHostBuilder
                 {
