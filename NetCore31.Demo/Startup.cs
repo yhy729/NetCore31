@@ -72,6 +72,7 @@ namespace NetCore31.Demo
 
             #region 注入DbContext
             //直接注入(在MyDbContext中自己控制数据库连接)
+            //EFCore官方的建议是使用Scoped的方式注入DbContext
             services.AddScoped<DbContext, MyDbContext>();
 
             //注入的同时传入options(注入的时候才指定数据库连接,这种方式配置在注入的地方需要注入的是MyDbContext而不能是DbContext)
@@ -106,7 +107,6 @@ namespace NetCore31.Demo
 
             services.AddScoped<IUserService, UserService>();
 
-
             services.Configure<EmailOption>(op => op.Title = "Default Name");
             services.Configure<EmailOption>("FromMemory", op => op.Title = "FromMemory");
             services.Configure<EmailOption>("FromConfiguration", Configuration.GetSection("Email"));
@@ -133,7 +133,7 @@ namespace NetCore31.Demo
             ////扫描Controller类
             //containerBuilder.RegisterAssemblyTypes(typeof(Program).Assembly)
             //                .Where(x => controllerBaseType.IsAssignableFrom(x) && x != controllerBaseType)
-            //                .PropertiesAutowired(); //属性注入 
+            //                .PropertiesAutowired(); //支持属性注入 
             #endregion
         }
 
